@@ -28,10 +28,7 @@ export const auth = (email, password) => {
             'email': email,
             'password': password
         }
-        const headers = {
-            'Accept': 'application/vnd.api+json'
-        }
-        axios.post('http://localhost:5000/sign_in', authData, { headers: headers })
+        axios.post('http://localhost:5000/sign_in', authData)
             .then(response => {
                 console.log(response);
                 dispatch(authSuccess(response.data));
