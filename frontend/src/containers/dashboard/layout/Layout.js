@@ -1,10 +1,11 @@
 import React from 'react';
 import './Layout.css';
+import { Link } from 'react-router-dom';
 
 const layout = ( props ) => (
     <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark static-top">
-            <a className="navbar-brand mr-1" href="index.html">Event me</a>
+            <Link to='/dashboard' className="navbar-brand mr-1">Event me</Link>
             <form className="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
             <div className="input-group">
                 </div>
