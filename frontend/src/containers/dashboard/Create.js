@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 class Create extends Component {
     state = {
-        new_event: {
+        newEvent: {
             name: {
                 element: 'input',
                 label: 'Name',
@@ -45,15 +45,15 @@ class Create extends Component {
     }
 
     inputChangedHandler = (event, controlName) => {
-        const newEvent = {
-            ...this.state.new_event,
+        const updateEvent = {
+            ...this.state.newEvent,
             [controlName]: {
-                ...this.state.new_event[controlName],
+                ...this.state.newEvent[controlName],
                 value: event.target.value,
                 touched: true
             }
         };
-        this.setState({new_event: newEvent});
+        this.setState({newEvent: updateEvent});
     }
 
     submitHandler = (event) => {
@@ -62,10 +62,10 @@ class Create extends Component {
 
     render() {
         const formElementsArray = [];
-        for ( let key in this.state.new_event ) {
+        for ( let key in this.state.newEvent ) {
             formElementsArray.push( {
                 id: key,
-                config: this.state.new_event[key]
+                config: this.state.newEvent[key]
             } );
         }
 

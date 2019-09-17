@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import './Login.css';
+import './Auth.css';
 import Input from '../../components/UI/Input';
 
 class Signup extends Component {
