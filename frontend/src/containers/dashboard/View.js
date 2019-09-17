@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Layout from './layout/Layout';
-import Card from '../../../components/card/Card';
+import Card from '../../components/card/Card';
  
 class View extends Component {
   state = {

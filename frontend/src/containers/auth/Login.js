@@ -22,7 +22,8 @@ class Login extends Component {
                 value: '',
                 touched: false
             }
-        }
+        },
+        isSignUp: false
     }
 
     componentDidMount(){

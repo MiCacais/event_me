@@ -9,40 +9,33 @@ class Signup extends Component {
             name: {
                 element: 'input',
                 label: 'Name',
-                elementConfig: {
-                    type: 'text',
-                },
+                type: 'text',
                 value: '',
                 touched: false
             },
             lastName: {
                 element: 'input',
-                label: 'Last name',
-                elementConfig: {
-                    type: 'text',
-                },
+                label: 'Las name',
+                type: 'text',
                 value: '',
                 touched: false
             },
             email: {
                 element: 'input',
                 label: 'Email',
-                elementConfig: {
-                    type: 'email',
-                },
+                type: 'text',
                 value: '',
                 touched: false
             },
             password: {
                 element: 'input',
                 label: 'Password',
-                elementConfig: {
-                    type: 'password',
-                },
+                type: 'password',
                 value: '',
                 touched: false
             }
-        }
+        },
+        isSignUp: true
     }
 
     componentDidMount(){

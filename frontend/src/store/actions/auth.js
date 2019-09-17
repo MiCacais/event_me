@@ -22,6 +22,12 @@ export const authFail = (error) => {
     };
 };
 
+export const logout = () => {
+    return {
+        type: actionTypes.AUTH_LOGOUT
+    }
+}
+
 export const auth = (email, password) => {
     return dispatch => {
         dispatch(authStart());
@@ -32,7 +38,7 @@ export const auth = (email, password) => {
         axios.post('http://localhost:5000/sign_in', authData)
             .then(response => {
                 console.log(response);
-                dispatch(authSuccess(response.data));
+                dispatch(authSuccess(response.data.token, response.data.userId));
             })
             .catch(err => {
                 console.log(err);

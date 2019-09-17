@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Input from '../../components/UI/Input';
-import Layout from './layout/Layout';
+import Layout from '../../components/UI/layout/Layout';
 import { Link } from 'react-router-dom';
 
 class Create extends Component {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Layout from './layout/Layout';
+import Layout from '../../components/UI/layout/Layout';
 import { Link } from 'react-router-dom';
 
 class Dashboard extends Component {
