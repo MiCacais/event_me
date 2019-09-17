@@ -23,14 +23,14 @@ class Create extends Component {
             event_start: {
                 element: 'input',
                 label: 'Start',
-                type: 'text',
+                type: 'datepicker',
                 value: '',
                 touched: false
             },
             event_end: {
                 element: 'input',
                 label: 'End',
-                type: 'text',
+                type: 'datepicker',
                 value: '',
                 touched: false
             },
@@ -45,23 +45,27 @@ class Create extends Component {
     }
 
     inputChangedHandler = (event, controlName) => {
-        const updatedControls = {
-            ...this.state.controls,
+        const newEvent = {
+            ...this.state.new_event,
             [controlName]: {
-                ...this.state.controls[controlName],
+                ...this.state.new_event[controlName],
                 value: event.target.value,
                 touched: true
             }
         };
-        this.setState({controls: updatedControls});
+        this.setState({new_event: newEvent});
+    }
+
+    submitHandler = (event) => {
+        event.preventDefault();
     }
 
     render() {
         const formElementsArray = [];
-        for ( let key in this.state.controls ) {
+        for ( let key in this.state.new_event ) {
             formElementsArray.push( {
                 id: key,
-                config: this.state.controls[key]
+                config: this.state.new_event[key]
             } );
         }
 
