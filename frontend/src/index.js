@@ -7,11 +7,13 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import authReducer from './store/reducers/auth';
+import crudReducer from './store/reducers/crud';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
-    auth: authReducer
+    auth: authReducer,
+    crud: crudReducer
 });
 
 const store = createStore(rootReducer, composeEnhancers(

@@ -1,4 +1,8 @@
 export {
     auth,
-    logout
+    logout,
+    setAuthRedirectPath
 } from './auth';
+export {
+    fetchEvents
+} from './crud';

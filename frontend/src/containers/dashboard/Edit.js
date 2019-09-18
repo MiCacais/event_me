@@ -3,9 +3,9 @@ import Input from '../../components/UI/Input';
 import Layout from '../../components/UI/layout/Layout';
 import { Link } from 'react-router-dom';
 
-class Create extends Component {
+class Edit extends Component {
     state = {
-        newEvent: {
+        editEvent: {
             name: {
                 element: 'input',
                 label: 'Name',
@@ -46,14 +46,14 @@ class Create extends Component {
 
     inputChangedHandler = (event, controlName) => {
         const updateEvent = {
-            ...this.state.newEvent,
+            ...this.state.editEvent,
             [controlName]: {
-                ...this.state.newEvent[controlName],
+                ...this.state.editEvent[controlName],
                 value: event.target.value,
                 touched: true
             }
         };
-        this.setState({newEvent: updateEvent});
+        this.setState({editEvent: updateEvent});
     }
 
     submitHandler = (event) => {
@@ -62,10 +62,10 @@ class Create extends Component {
 
     render() {
         const formElementsArray = [];
-        for ( let key in this.state.newEvent ) {
+        for ( let key in this.state.editEvent ) {
             formElementsArray.push( {
                 id: key,
-                config: this.state.newEvent[key]
+                config: this.state.editEvent[key]
             } );
         }
 
@@ -84,7 +84,7 @@ class Create extends Component {
             <Layout>
                 <div className="container">
                     <div className="card card-login mx-auto mt-5 mb-3">
-                        <div className="card-header">New event</div>
+                        <div className="card-header">Edit event</div>
                         <div className="card-body">
                             <form onSubmit={this.submitHandler}>
                                 {form}
@@ -101,4 +101,4 @@ class Create extends Component {
     }
 }
   
-export default Create;
+export default Edit;
