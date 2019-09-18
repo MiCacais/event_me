@@ -6,6 +6,8 @@ import Signup from './containers/auth/Signup';
 import Dashboard from './containers/dashboard/Dashboard';
 import Create from './containers/dashboard/Create';
 import Logout from './containers/auth/Logout';
+import View from './containers/dashboard/View';
+import Edit from './containers/dashboard/Edit';
 
 export default props =>
     <Switch>
@@ -15,5 +17,7 @@ export default props =>
         <Route path='/dashboard' component={Dashboard}/>
         <Route path='/create' component={Create}/>
         <Route path='/logout' component={Logout}/>
+        <Route path='/view' component={View}/>
+        <Route path='/edit' component={Edit}/>
         <Redirect from='*' to='/'/>
     </Switch>
