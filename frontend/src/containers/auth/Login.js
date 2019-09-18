@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import './Auth.css';
 import * as actions from '../../store/actions/index';
 import Input from '../../components/UI/Input';
@@ -28,6 +28,9 @@ class Login extends Component {
 
     componentDidMount(){
         document.body.classList.add('bg-dark');
+        if (this.props.authRedirectPath !== '/'){
+            this.props.onSetAuthRedirectPath();
+        }
     }
 
     componentWillUnmount(){
@@ -54,13 +57,13 @@ class Login extends Component {
     render() {
         const formElementsArray = [];
         for ( let key in this.state.controls ) {
-            formElementsArray.push( {
+            formElementsArray.push({
                 id: key,
                 config: this.state.controls[key]
             } );
         }
 
-        const form = formElementsArray.map( formElement => (
+        const form = formElementsArray.map(formElement => (
             <Input
                 key={formElement.id}
                 element={formElement.config.element}
@@ -68,11 +71,17 @@ class Login extends Component {
                 type={formElement.config.type}
                 value={formElement.config.value}
                 touched={formElement.config.touched}
-                onChange={( event ) => this.inputChangedHandler( event, formElement.id )} />
+                onChange={( event ) => this.inputChangedHandler(event, formElement.id)} />
         ) );
+
+        let authRedirect = null;
+        if (this.props.isAuthenticated) {
+            authRedirect = <Redirect to={this.props.authRedirectPath} />
+        }
 
         return (
             <div className="container">
+                {authRedirect}
                 <div className="card card-login mx-auto mt-5">
                     <div className="card-header">Sign in</div>
                     <div className="card-body">
@@ -90,10 +99,19 @@ class Login extends Component {
     }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = state => {
     return {
-        onAuth: (email, password) => dispatch(actions.auth(email, password))
+        error: state.auth.error,
+        isAuthenticated: state.auth.token !== null,
+        authRedirectPath: state.auth.authRedirectPath
     };
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+const mapDispatchToProps = dispatch => {
+    return {
+        onAuth: (email, password) => dispatch(actions.auth(email, password)),
+        onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/dashboard'))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

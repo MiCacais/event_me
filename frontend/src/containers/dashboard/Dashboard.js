@@ -14,13 +14,27 @@ class Dashboard extends Component {
         let events = [];
         if ( this.props.events ) {
             events = this.props.events.map( event => (
-                <td>
-                    key={event.id}
-                    name={event.name}
-                </td>
+                <tr>
+                    <td>
+                        key={event.id}
+                        name={event.name}
+                    </td>
+                    <td>
+                        <Link to='/view'><i class="fa fa-eye"></i></Link>
+                    </td>
+                    <td>
+                        <Link to='/edit'><i class="fa fa-edit"></i></Link>
+                    </td>
+                    <td>
+                        <Link to='/edit'><i class="fa fa-times"></i></Link>
+                    </td>
+                </tr>
             ))
         }else{
-            events = "You don't have events"
+            events = <tr><td>You don't have events</td>
+                        <td><i class="fa fa-eye"></i></td>
+                        <td><i class="fa fa-edit"></i></td>
+                        <td><i class="fa fa-times"></i></td></tr>
         }
         return (
             <Layout>
@@ -41,18 +55,7 @@ class Dashboard extends Component {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>{ events }</td>
-                                        <td>
-                                            <Link to='/view'><i class="fa fa-eye"></i></Link>
-                                        </td>
-                                        <td>
-                                            <Link to='/edit'><i class="fa fa-edit"></i></Link>
-                                        </td>
-                                        <td>
-                                            <i class="fa fa-times"></i>
-                                        </td>
-                                    </tr>
+                                    { events }
                                 </tbody>
                             </table>
                         </div>
