@@ -32,13 +32,12 @@ export const auth = (email, password) => {
     return dispatch => {
         dispatch(authStart());
         const authData = {
-            'email': email,
-            'password': password
+            email: email,
+            password: password
         }
-        axios.post('http://localhost:5000/sign_in', authData)
+        axios.post('http://localhost:5000/auth/sign_in', authData)
             .then(response => {
-                console.log(response);
-                dispatch(authSuccess(response.data.token, response.data.userId));
+                dispatch(authSuccess(response.headers["access-token"], response.data.data.id));
             })
             .catch(err => {
                 console.log(err);

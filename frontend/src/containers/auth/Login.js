@@ -68,7 +68,7 @@ class Login extends Component {
                 type={formElement.config.type}
                 value={formElement.config.value}
                 touched={formElement.config.touched}
-                onChange={( event ) => this.inputChangedHandler( event, formElement.id )} />
+                onChange={(event) => this.inputChangedHandler(event, formElement.id)} />
         ) );
 
         return (
@@ -78,7 +78,7 @@ class Login extends Component {
                     <div className="card-body">
                         <form onSubmit={this.submitHandler}>
                             {form}
-                            <a className="btn btn-secondary btn-block" href="index.html">Login</a>
+                            <button className="btn btn-secondary btn-block">Login</button>
                         </form>
                         <div className="text-center">
                             <Link to='/signup' className="d-block small mt-3">Register an Account</Link>
