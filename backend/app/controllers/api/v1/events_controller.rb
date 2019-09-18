@@ -5,7 +5,7 @@ module Api
       before_action :authenticate_user!
       
       def index
-        events = Event.order('created_at DESC');
+        events = Event.where(user_id: current_user.id);
         render json: {status: 'SUCCESS', message:'Artigos carregados', data:events}, status: :ok
       end
 
