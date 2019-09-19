@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Input from '../../components/UI/Input';
 import Layout from '../../components/UI/layout/Layout';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/index';
+import Modal from '../modal/Modal';
 
 class Create extends Component {
     state = {
@@ -16,22 +19,22 @@ class Create extends Component {
             description: {
                 element: 'input',
                 label: 'Description',
-                type: 'text',
+                type: 'textarea',
                 value: '',
                 touched: false
             },
-            event_start: {
+            eventStart: {
                 element: 'input',
                 label: 'Start',
                 type: 'datepicker',
-                value: '',
+                value: 'September 19, 2019 2:26 PM',
                 touched: false
             },
-            event_end: {
+            eventEnd: {
                 element: 'input',
                 label: 'End',
                 type: 'datepicker',
-                value: '',
+                value: 'September 19, 2019 2:26 PM',
                 touched: false
             },
             picture: {
@@ -44,11 +47,11 @@ class Create extends Component {
         }
     }
 
-    inputChangedHandler = (event, controlName) => {
+    inputChangedHandler = (event, eventName) => {
         const updateEvent = {
             ...this.state.newEvent,
-            [controlName]: {
-                ...this.state.newEvent[controlName],
+            [eventName]: {
+                ...this.state.newEvent[eventName],
                 value: event.target.value,
                 touched: true
             }
@@ -58,6 +61,18 @@ class Create extends Component {
 
     submitHandler = (event) => {
         event.preventDefault();
+        console.log(this.state.newEvent.eventStart.value)
+        this.props.onCreate(
+            this.state.newEvent.name.value,
+            this.state.newEvent.description.value,
+            this.state.newEvent.eventStart.value,
+            this.state.newEvent.eventEnd.value,
+            this.state.newEvent.picture.value,
+            localStorage.getItem("userId"),
+            localStorage.getItem("token"),
+            localStorage.getItem("client"),
+            localStorage.getItem("uid")
+        )
     }
 
     render() {
@@ -80,15 +95,21 @@ class Create extends Component {
                 onChange={( event ) => this.inputChangedHandler( event, formElement.id )} />
         ) );
 
+        let modal = <Modal message='' open={false}/>
+        if (this.props.message !== null){
+            modal = <Modal message={this.props.message} open={true}/>
+        }
+
         return (
             <Layout>
+                {modal}
                 <div className="container">
-                    <div className="card card-login mx-auto mt-5 mb-3">
+                    <div className="card card-login mx-auto mt-5 mb-5">
                         <div className="card-header">New event</div>
                         <div className="card-body">
                             <form onSubmit={this.submitHandler}>
                                 {form}
-                                <a className="btn btn-secondary btn-block" href="index.html">Create</a>
+                                <button className="btn btn-secondary btn-block">Create</button>
                             </form>
                             <div className="text-center">
                                 <Link to='/dashboard' className="d-block small mt-3">Back to dashboard</Link>
@@ -100,5 +121,22 @@ class Create extends Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    console.log(state.crud.message)
+    return {
+        message: state.crud.message,
+        userId: state.auth.userId,
+        token: state.auth.token,
+        client: state.auth.client,
+        uid: state.auth.uid
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onCreate: (name, description, eventStart, eventEnd,picture, userId, token, client, uid) => dispatch(actions.craeteEvent(name, description, eventStart, eventEnd, picture, userId, token, client, uid)),
+    };
+};
   
-export default Create;
+export default connect(mapStateToProps, mapDispatchToProps)(Create);

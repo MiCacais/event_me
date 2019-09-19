@@ -7,45 +7,45 @@ import * as actions from '../../store/actions/index';
 class Dashboard extends Component {
 
     componentDidMount () {
-        this.props.onFetchEvents(this.props.token);
+        const token = localStorage.getItem("token");
+        const client = localStorage.getItem("client");
+        const uid = localStorage.getItem("uid");
+        this.props.onFetchEvents( token, client, uid);
+    }
+
+    deleteEventHandler = () => {
+        this.props.onDeleteEvent()
     }
 
     render() {
-        let events = [];
+        let events = []
         if ( this.props.events ) {
-            events = this.props.events.map( event => (
-                <tr>
-                    <td>
-                        key={event.id}
-                        name={event.name}
-                    </td>
-                    <td>
-                        <Link to='/view'><i class="fa fa-eye"></i></Link>
-                    </td>
-                    <td>
-                        <Link to='/edit'><i class="fa fa-edit"></i></Link>
-                    </td>
-                    <td>
-                        <Link to='/edit'><i class="fa fa-times"></i></Link>
-                    </td>
-                </tr>
-            ))
+            events = this.props.events.map(event => {
+                return (
+                    <tr>
+                        <td>name={event.name}</td>
+                        <td><Link to='/view'><i className="fa fa-eye"></i></Link></td>
+                        <td><Link to='/edit'><i className="fa fa-edit"></i></Link></td>
+                        <td><button><i className="fa fa-times"></i></button></td>
+                    </tr>
+                )
+            })
         }else{
             events = <tr><td>You don't have events</td>
-                        <td><i class="fa fa-eye"></i></td>
-                        <td><i class="fa fa-edit"></i></td>
-                        <td><i class="fa fa-times"></i></td></tr>
+                    <td><i className="fa fa-eye"></i></td>
+                    <td><i className="fa fa-edit"></i></td>
+                    <td><i className="fa fa-times"></i></td></tr>
         }
         return (
             <Layout>
                 <Link to='/create' className="btn btn-outline-secondary btn-lg btn-block md-4 margin-bt-20">
                     <i className="fa fa-plus"></i> Add new event
                 </Link>
-                <div class="card mb-5">
-                    <div class="card-header"><i class="fa fa-table"></i> My events</div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <div className="card mb-5">
+                    <div className="card-header"><i className="fa fa-table"></i> My events</div>
+                    <div className="card-body">
+                        <div className="table-responsive">
+                            <table className="table table-bordered" id="dataTable" width="100%" cellSpacing="0">
                                 <thead>
                                     <tr>
                                     <th scope="col">Name</th>
@@ -68,14 +68,18 @@ class Dashboard extends Component {
 
 const mapStateToProps = state => {
     return {
-        events: state.events,
-        token: state.auth.token
+        events: state.crud.events,
+        userId: state.auth.userId,
+        token: state.auth.token,
+        client: state.auth.client,
+        uid: state.auth.uid
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchEvents: (token) => dispatch( actions.fetchEvents(token) )
+        onFetchEvents: (token, client, uid) => dispatch( actions.fetchEvents(token, client, uid) ),
+        onDeleteEvent: (token, client, uid, eventId) => dispatch( actions.deleteEvent(token, client, uid, eventId) )
     };
 };
   

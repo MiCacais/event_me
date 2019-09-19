@@ -21,19 +21,82 @@ export const fetchEventsStart = () => {
     };
 };
 
-export const fetchEvents = ( token ) => {
+export const fetchEvents = ( token, client, uid ) => {
     return dispatch => {
         dispatch(fetchEventsStart());
-        axios.get( '/api/v1/.json?auth=' + token)
+        const queryParams = token + "&client=" + client + "&uid=" + uid;
+        axios.get( 'http://localhost:5000/api/v1/events?access-token=' + queryParams)
             .then( res => {
-                const fetchedEvents = [];
-                for ( let key in res.data ) {
-                    fetchedEvents.push( {
-                        ...res.data[key],
-                        id: key
-                    } );
-                }
-                dispatch(fetchEventsSuccess(fetchedEvents));
+                dispatch(fetchEventsSuccess(res.data.data));
+            } )
+            .catch( err => {
+                dispatch(fetchEventsFail(err));
+            } );
+    };
+};
+
+export const createEventSuccess = ( message ) => {
+    return {
+        type: actionTypes.CREATE_EVENT_SUCCESS,
+        message: message
+    };
+};
+
+export const createEventFail = ( error ) => {
+    return {
+        type: actionTypes.CREATE_EVENT_FAIL,
+        error: error
+    };
+}
+
+export const createEventStart = () => {
+    return {
+        type: actionTypes.CREATE_EVENT_START
+    };
+};
+
+export const craeteEvent = ( name, description, eventStart, eventEnd, picture, userId, token, client, uid ) => {
+    return dispatch => {
+        dispatch( createEventStart() );
+        const newEvent = {
+            "name": name,
+            "description": description,
+            "event_start": eventStart,
+            "event_end": eventEnd,
+            "picture": picture,
+            "user_id": userId
+        }
+        const queryParams = token + "&client=" + client + "&uid=" + uid;
+        axios.post( 'http://localhost:5000/api/v1/events?access-token=' + queryParams, newEvent)
+            .then( response => {
+                dispatch( createEventSuccess( response.data.message ) );
+            } )
+            .catch( error => {
+                dispatch( createEventFail( error ) );
+            } );
+    };
+};
+
+export const deleteEventSuccess = ( message ) => {
+    return {
+        type: actionTypes.DELETE_EVENT_SUCCESS,
+        message: message
+    };
+};
+
+export const deleteEventFail = ( error ) => {
+    return {
+        type: actionTypes.DELETE_EVENT_FAIL,
+        error: error
+    };
+}
+
+export const deleteEvent = ( eventId, token, client, uid ) => {
+    return dispatch => {
+        const queryParams = '?access-token=' + token + "&client=" + client + "&uid=" + uid;
+        axios.delete( 'http://localhost:5000/api/v1/events/' + eventId + queryParams)
+            .then( res => {
+                dispatch(fetchEventsSuccess(res.data.data));
             } )
             .catch( err => {
                 dispatch(fetchEventsFail(err));

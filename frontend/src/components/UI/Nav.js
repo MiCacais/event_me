@@ -9,7 +9,7 @@ const nav = () => (
         </form>
         <ul className="navbar-nav ml-auto ml-md-0">
             <li className="nav-item dropdown no-arrow">
-                <Link to='/logout' className="nav-link">Sign out <i class="fa fa-user-circle"></i></Link>
+                <Link to='/logout' className="nav-link">Sign out <i className="fa fa-user-circle"></i></Link>
             </li>
         </ul>
     </nav>

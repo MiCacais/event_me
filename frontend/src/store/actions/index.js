@@ -1,8 +1,11 @@
 export {
     auth,
     logout,
+    signUp,
     setAuthRedirectPath
 } from './auth';
 export {
-    fetchEvents
+    fetchEvents,
+    craeteEvent,
+    deleteEvent
 } from './crud';
