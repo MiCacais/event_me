@@ -13,6 +13,6 @@
     event_start: "2017-07-04*13:23:55",
     event_end: "2017-07-04*13:23:55",
     picture: Faker::Avatar.image,
-    user_id: 1
+    user_id: 5
   })
 end

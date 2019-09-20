@@ -6,7 +6,7 @@ module Api
       
       def index
         events = Event.where(user_id: current_user.id);
-        render json: {status: 'SUCCESS', message:'Artigos carregados', data:events}, status: :ok
+        render json: {status: 'SUCCESS', message:'Show events', data:events}, status: :ok
       end
 
       def show
