@@ -77,10 +77,11 @@ export const craeteEvent = ( name, description, eventStart, eventEnd, picture, u
     };
 };
 
-export const deleteEventSuccess = ( message ) => {
+export const deleteEventSuccess = ( message, eventId ) => {
     return {
         type: actionTypes.DELETE_EVENT_SUCCESS,
-        message: message
+        message: message,
+        eventId: eventId
     };
 };
 
@@ -96,10 +97,72 @@ export const deleteEvent = ( eventId, token, client, uid ) => {
         const queryParams = '?access-token=' + token + "&client=" + client + "&uid=" + uid;
         axios.delete( 'http://localhost:5000/api/v1/events/' + eventId + queryParams)
             .then( res => {
-                dispatch(fetchEventsSuccess(res.data.data));
+                dispatch(deleteEventSuccess(res.data.data, eventId));
             } )
             .catch( err => {
-                dispatch(fetchEventsFail(err));
+                dispatch(deleteEventFail(err));
+            } );
+    };
+};
+
+export const updateEventSuccess = ( message ) => {
+    return {
+        type: actionTypes.UPDATE_EVENT_SUCCESS,
+        message: message
+    };
+};
+
+export const updateEventFail = ( error ) => {
+    return {
+        type: actionTypes.UPDATE_EVENT_FAIL,
+        error: error
+    };
+}
+
+export const updateEvent = ( name, description, eventStart, eventEnd, picture, eventId, token, client, uid ) => {
+    return dispatch => {
+        dispatch( createEventStart() );
+        const updatedEvent = {
+            "name": name,
+            "description": description,
+            "event_start": eventStart,
+            "event_end": eventEnd,
+            "picture": picture
+        }
+        const queryParams = '?access-token=' + token + "&client=" + client + "&uid=" + uid;
+        axios.put( 'http://localhost:5000/api/v1/events/' + eventId + queryParams, updatedEvent)
+            .then( response => {
+                dispatch( updateEventSuccess( response.data.message ) );
+            } )
+            .catch( error => {
+                dispatch( updateEventFail( error ) );
+            } );
+    };
+};
+
+export const fetchEventSuccess = ( event ) => {
+    return {
+        type: actionTypes.FETCH_EVENT_SUCCESS,
+        event: event
+    };
+};
+
+export const fetchEventFail = ( error ) => {
+    return {
+        type: actionTypes.FETCH_EVENT_FAIL,
+        error: error
+    };
+}
+
+export const fetchEvent = ( eventId, token, client, uid ) => {
+    return dispatch => {
+        const queryParams = '?access-token=' + token + "&client=" + client + "&uid=" + uid;
+        axios.get( 'http://localhost:5000/api/v1/events/' + eventId + queryParams)
+            .then( response => {
+                dispatch( fetchEventSuccess( response.data.data ) );
+            } )
+            .catch( error => {
+                dispatch( fetchEventFail( error ) );
             } );
     };
 };

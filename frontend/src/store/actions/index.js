@@ -7,5 +7,7 @@ export {
 export {
     fetchEvents,
     craeteEvent,
-    deleteEvent
+    deleteEvent,
+    updateEvent,
+    fetchEvent
 } from './crud';

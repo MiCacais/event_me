@@ -1,8 +1,9 @@
 import React from 'react';
+import './Card.css';
 
 const card = (props) => (
-    <div className="card">
-        <img src={props.img} className="card-img-top"/>
+    <div className="card md-3 card-width mx-auto center">
+        <img src={props.picture} className="card-img-top img-size text-center mx-auto"/>
         <div className="card-body">
             <h5 className="card-title">{props.name}</h5>
             <p className="card-text">{props.description}</p>

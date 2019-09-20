@@ -13,28 +13,35 @@ class Dashboard extends Component {
         this.props.onFetchEvents( token, client, uid);
     }
 
-    deleteEventHandler = () => {
-        this.props.onDeleteEvent()
+    deleteEventHandler = (eventId) => {
+        const token = localStorage.getItem("token");
+        const client = localStorage.getItem("client");
+        const uid = localStorage.getItem("uid");
+        this.props.onDeleteEvent( eventId, token, client, uid);
     }
 
     render() {
         let events = []
-        if ( this.props.events ) {
+        if ( this.props.events !== null ) {
             events = this.props.events.map(event => {
                 return (
-                    <tr>
-                        <td>name={event.name}</td>
-                        <td><Link to='/view'><i className="fa fa-eye"></i></Link></td>
-                        <td><Link to='/edit'><i className="fa fa-edit"></i></Link></td>
-                        <td><button><i className="fa fa-times"></i></button></td>
+                    <tr key={event.id}>
+                        <td>{event.name}</td>
+                        <td><Link to={'/view/' + event.id} className="btn btn-info"><i className="fa fa-eye"></i></Link></td>
+                        <td><Link to={'/edit/' + event.id} className="btn btn-warning"><i className="fa fa-edit"></i></Link></td>
+                        <td><button className="btn btn-danger ml-2" onClick={() => this.deleteEventHandler(event.id)}><i className="fa fa-trash"></i></button></td>
                     </tr>
                 )
             })
         }else{
-            events = <tr><td>You don't have events</td>
+            return (
+                <tr>
+                    <td>You don't have events</td>
                     <td><i className="fa fa-eye"></i></td>
                     <td><i className="fa fa-edit"></i></td>
-                    <td><i className="fa fa-times"></i></td></tr>
+                    <td><i className="fa fa-times"></i></td>
+                </tr>
+            );         
         }
         return (
             <Layout>
@@ -79,7 +86,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onFetchEvents: (token, client, uid) => dispatch( actions.fetchEvents(token, client, uid) ),
-        onDeleteEvent: (token, client, uid, eventId) => dispatch( actions.deleteEvent(token, client, uid, eventId) )
+        onDeleteEvent: (eventId, token, client, uid) => dispatch( actions.deleteEvent(eventId, token, client, uid) )
     };
 };
   

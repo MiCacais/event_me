@@ -61,7 +61,6 @@ class Create extends Component {
 
     submitHandler = (event) => {
         event.preventDefault();
-        console.log(this.state.newEvent.eventStart.value)
         this.props.onCreate(
             this.state.newEvent.name.value,
             this.state.newEvent.description.value,
@@ -123,7 +122,6 @@ class Create extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state.crud.message)
     return {
         message: state.crud.message,
         userId: state.auth.userId,
